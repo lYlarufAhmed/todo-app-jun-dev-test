@@ -10,24 +10,6 @@ import {ModalContainer} from "./components/ModalContainer";
 import {UserDetail} from "./components/UserDetail";
 import {useSelector} from "react-redux";
 
-const items: TodoItem[] = [
-    {
-        id: 43343,
-        title: 'Urgent for university',
-        description: 'Parasite research',
-        status: "to-do"
-    }, {
-        id: 434343,
-        title: 'Attend Lab',
-        description: 'Goto lab',
-        status: "done"
-    }, {
-        id: 12323,
-        title: 'Grocery shop',
-        description: 'Buy tissues',
-        status: "in-progress"
-    },
-]
 const TABS: string[] = ['all', 'to-do', 'done', 'in-progress']
 
 function App() {
