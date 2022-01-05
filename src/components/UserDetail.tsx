@@ -3,11 +3,11 @@ import {Avatar, CircularProgress, ImageListItem, List, ListItem, ListItemText} f
 import {useEffect} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {loadUser} from "../store/effets"
+import {ApplicationState} from "../store/types";
 
 
 export function UserDetail() {
-    // @ts-ignore
-    const {isLoading, user} = useSelector(({loading: {user: isLoading}, user}) => ({isLoading, user}))
+    const {isLoading, user} = useSelector(({loading: {user: isLoading}, user}: ApplicationState) => ({isLoading, user}))
     const dispatch = useDispatch()
     useEffect(() => {
         dispatch(loadUser())

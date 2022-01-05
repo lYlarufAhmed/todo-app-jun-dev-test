@@ -5,10 +5,14 @@ import * as React from 'react';
 
 type Props = {
     handleOpenUserDetailModal: (modalName: string) => void
+    handleTabChange: (tabIndx: number) => void,
+    currentTabIndex: number,
+    tabs: string[]
 };
 
 export function TopHeader(props: Props) {
-    const {handleOpenUserDetailModal} = props
+    const {handleOpenUserDetailModal, currentTabIndex, handleTabChange, tabs} = props
+
     return (
         <div>
             <AppBar color="primary" position="sticky" elevation={0}>
@@ -43,11 +47,12 @@ export function TopHeader(props: Props) {
                 </Toolbar>
             </AppBar>
             <AppBar component="div" position="static" elevation={0} sx={{zIndex: 0}}>
-                <Tabs value={0} textColor="inherit">
-                    <Tab label="All"/>
-                    <Tab label="To-do"/>
-                    <Tab label="Done"/>
-                    <Tab label="In Progress"/>
+                <Tabs value={currentTabIndex} textColor="inherit">
+                    {tabs.map((tab, index) => <Tab key={index} label={tab} onClick={() => handleTabChange(index)}/>)}
+                    {/*<Tab label="All"/>*/}
+                    {/*<Tab label="To-do"/>*/}
+                    {/*<Tab label="Done"/>*/}
+                    {/*<Tab label="In Progress"/>*/}
                 </Tabs>
             </AppBar>
         </div>

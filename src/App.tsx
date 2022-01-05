@@ -1,13 +1,14 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import './App.css';
 import {TodoList} from "./components/TodoList";
-import {TodoItem} from "./store/types";
+import {ApplicationState, TodoItem} from "./store/types";
 import {Box, CssBaseline, Fab} from '@mui/material'
 import {TopHeader} from "./components/TopHeader";
 import AddIcon from "@mui/icons-material/Add"
 import {NewTodoForm} from "./components/NewTodoForm";
 import {ModalContainer} from "./components/ModalContainer";
 import {UserDetail} from "./components/UserDetail";
+import {useSelector} from "react-redux";
 
 const items: TodoItem[] = [
     {
@@ -27,10 +28,20 @@ const items: TodoItem[] = [
         status: "in-progress"
     },
 ]
+const TABS: string[] = ['all', 'to-do', 'done', 'in-progress']
 
 function App() {
+    const tasks = useSelector((state: ApplicationState) => state.tasks)
     const [isNewTaskModalOpen, setIsNewTaskModalOpen] = useState(false)
+    const [currTabIndx, setCurrTabIndx] = useState(0)
     const [currentModal, setCurrentModal] = useState('')
+    const [currTasks, setTasks] = useState<TodoItem[] | []>(tasks)
+
+    useEffect(() => {
+        if (currTabIndx === 0) setTasks(tasks)
+        else
+            setTasks(tasks.filter(task => task.status === TABS[currTabIndx]))
+    }, [currTabIndx, TABS, tasks])
 
     const handleCloseNetTaskModal = () => {
         setIsNewTaskModalOpen(false)
@@ -50,13 +61,16 @@ function App() {
         }
 
     }
+
+    const handleTabChange = (tabIndex: number) => setCurrTabIndx(tabIndex)
     return (
         <Box sx={{display: 'flex', position: 'relative', minHeight: '100vh'}}>
             <CssBaseline/>
             <Box sx={{flex: 1, display: 'flex', flexDirection: 'column'}}>
-                <TopHeader handleOpenUserDetailModal={handleOpenNetTaskModal}/>
+                <TopHeader tabs={TABS} handleOpenUserDetailModal={handleOpenNetTaskModal}
+                           handleTabChange={handleTabChange} currentTabIndex={currTabIndx}/>
                 <Box component="main" sx={{flex: 1, py: 6, px: 4, bgcolor: '#eaeff1'}}>
-                    <TodoList items={items}/>
+                    <TodoList items={currTasks}/>
                 </Box>
             </Box>
             <Fab color="primary" sx={{

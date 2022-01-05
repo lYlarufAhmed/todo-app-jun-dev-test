@@ -5,8 +5,8 @@ import produce from 'immer';
 import {ApplicationState, ApplicationAction} from './types';
 
 const user = {
-    name: 'maruf',
-    birth_year: '1889'
+    name: '',
+    birth_year: ''
 }
 export const initialState: ApplicationState = {
     loading: {
