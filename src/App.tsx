@@ -5,7 +5,9 @@ import {TodoItem} from "./store/types";
 import {Box, CssBaseline, Fab} from '@mui/material'
 import {TopHeader} from "./components/TopHeader";
 import AddIcon from "@mui/icons-material/Add"
-import {NewTodoModal} from "./components/NewTodoModal";
+import {NewTodoForm} from "./components/NewTodoForm";
+import {ModalContainer} from "./components/ModalContainer";
+import {UserDetail} from "./components/UserDetail";
 
 const items: TodoItem[] = [
     {
@@ -28,14 +30,31 @@ const items: TodoItem[] = [
 
 function App() {
     const [isNewTaskModalOpen, setIsNewTaskModalOpen] = useState(false)
+    const [currentModal, setCurrentModal] = useState('')
 
-    const handleCloseNetTaskModal = () => setIsNewTaskModalOpen(false)
-    const handleOpenNetTaskModal = () => setIsNewTaskModalOpen(true)
+    const handleCloseNetTaskModal = () => {
+        setIsNewTaskModalOpen(false)
+        setCurrentModal('')
+    }
+    const handleOpenNetTaskModal = (modalName: string) => {
+        setCurrentModal(modalName)
+        setIsNewTaskModalOpen(true)
+    }
+
+    const renderModalContent = () => {
+        switch (currentModal) {
+            case "profile":
+                return (<UserDetail/>)
+            default:
+                return (<NewTodoForm handleClose={handleCloseNetTaskModal}/>)
+        }
+
+    }
     return (
         <Box sx={{display: 'flex', position: 'relative', minHeight: '100vh'}}>
             <CssBaseline/>
             <Box sx={{flex: 1, display: 'flex', flexDirection: 'column'}}>
-                <TopHeader/>
+                <TopHeader handleOpenUserDetailModal={handleOpenNetTaskModal}/>
                 <Box component="main" sx={{flex: 1, py: 6, px: 4, bgcolor: '#eaeff1'}}>
                     <TodoList items={items}/>
                 </Box>
@@ -44,10 +63,12 @@ function App() {
                 position: 'absolute',
                 bottom: 16,
                 right: 46,
-            }} aria-label="add" onClick={handleOpenNetTaskModal}>
+            }} aria-label="add" onClick={() => handleOpenNetTaskModal('new-todo')}>
                 <AddIcon/>
             </Fab>
-            <NewTodoModal open={isNewTaskModalOpen} handleClose={handleCloseNetTaskModal}/>
+            <ModalContainer open={isNewTaskModalOpen} handleClose={handleCloseNetTaskModal}>
+                {renderModalContent()}
+            </ModalContainer>
         </Box>
     );
 }

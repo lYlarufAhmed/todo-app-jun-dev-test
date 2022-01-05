@@ -3,16 +3,20 @@ import {AppBar, Avatar, Grid, Tabs, Toolbar, Tab, Typography} from '@mui/materia
 import IconButton from '@mui/material/IconButton';
 import * as React from 'react';
 
-type Props = {};
+type Props = {
+    handleOpenUserDetailModal: (modalName: string) => void
+};
 
 export function TopHeader(props: Props) {
+    const {handleOpenUserDetailModal} = props
     return (
         <div>
             <AppBar color="primary" position="sticky" elevation={0}>
                 <Toolbar>
                     <Grid container spacing={1} alignItems="center" justifyContent={"flex-end"}>
                         <Grid item>
-                            <IconButton color="inherit" sx={{p: 0.5}}>
+                            <IconButton color="inherit" sx={{p: 0.5}}
+                                        onClick={() => handleOpenUserDetailModal('profile')}>
                                 <Avatar
                                     src="https://free.clipartof.com/160-Geisha-Avatar-Character-Free-Vector-Clipart-Illustration.jpg"
                                     alt="My Avatar"/>
