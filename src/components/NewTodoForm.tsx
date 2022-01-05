@@ -1,10 +1,9 @@
 // @flow
 import {
-    Box, Button,
+     Button,
     FormControl,
     InputLabel,
     MenuItem,
-    Modal,
     Select,
     Stack,
     TextField,

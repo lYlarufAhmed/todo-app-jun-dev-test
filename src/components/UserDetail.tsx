@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {Avatar, ImageListItem, List, ListItem, ListItemText, Stack} from "@mui/material";
+import {Avatar, ImageListItem, List, ListItem, ListItemText} from "@mui/material";
 
 
 export function UserDetail() {
