@@ -52,6 +52,13 @@ const reducer = (state = initialState, action: ApplicationAction) => {
                 draft.loading.user = false;
                 draft.error.user = action.payload.message
             });
+        case "updateTask":
+            return produce(state, draft => {
+                draft.tasks = draft.tasks.map(task => task.id === action.payload.id ? {
+                    ...task,
+                    [action.payload.field]: action.payload.value
+                } : task)
+            })
         default:
             return initialState
     }

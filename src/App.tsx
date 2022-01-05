@@ -41,7 +41,7 @@ function App() {
         if (currTabIndx === 0) setTasks(tasks)
         else
             setTasks(tasks.filter(task => task.status === TABS[currTabIndx]))
-    }, [currTabIndx, TABS, tasks])
+    }, [currTabIndx, tasks])
 
     const handleCloseNetTaskModal = () => {
         setIsNewTaskModalOpen(false)

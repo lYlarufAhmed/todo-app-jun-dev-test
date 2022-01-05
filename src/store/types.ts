@@ -41,9 +41,16 @@ export interface LoadUserError extends Action {
     payload: { message: string }
 }
 
-export interface UpdateTaskStatus extends Action {
-    type: 'updateTaskStatus'
+
+export interface UpdateTask extends Action {
+    type: 'updateTask'
+    payload: { id: number, field: string, value: string }
 }
 
-export type ApplicationAction = LoadUserRequest | LoadUserSuccess | LoadUserError | UpdateTaskStatus
+export interface AddTask extends Action {
+    type: 'addTask'
+    payload: { item: TodoItem }
+}
+
+export type ApplicationAction = AddTask | LoadUserRequest | LoadUserSuccess | LoadUserError | UpdateTask
 
