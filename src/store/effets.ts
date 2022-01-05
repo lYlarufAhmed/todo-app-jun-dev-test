@@ -5,7 +5,7 @@ import * as userService from '../services/userService';
 
 type Effect = ThunkAction<any, ApplicationState, any, ApplicationAction>;
 
-export const loadUsers = (): Effect => (dispatch, getState) => {
+export const loadUser = (): Effect => (dispatch, getState) => {
     dispatch(loadUserRequest());
     return userService.loadUser()
         .then(user => dispatch(loadUserSuccess(user)))

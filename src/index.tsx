@@ -8,11 +8,15 @@ import reportWebVitals from './reportWebVitals';
 import configureStore from "./store";
 
 const store = configureStore(initialState)
+
+const ConnectedApp = () => {
+    return (<Provider store={store}>
+        <App/>
+    </Provider>)
+}
 ReactDOM.render(
     <React.StrictMode>
-        <Provider store={store}>
-            <App/>
-        </Provider>
+        <ConnectedApp/>
     </React.StrictMode>,
     document.getElementById('root')
 );

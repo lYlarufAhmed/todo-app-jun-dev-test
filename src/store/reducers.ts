@@ -52,6 +52,8 @@ const reducer = (state = initialState, action: ApplicationAction) => {
                 draft.loading.user = false;
                 draft.error.user = action.payload.message
             });
+        default:
+            return initialState
     }
 }
 

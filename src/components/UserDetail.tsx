@@ -1,23 +1,36 @@
 import * as React from 'react';
-import {Avatar, ImageListItem, List, ListItem, ListItemText} from "@mui/material";
+import {Avatar, CircularProgress, ImageListItem, List, ListItem, ListItemText} from "@mui/material";
+import {useEffect} from "react";
+import {useDispatch, useSelector} from "react-redux";
+import {loadUser} from "../store/effets"
 
 
 export function UserDetail() {
+    // @ts-ignore
+    const {isLoading, user} = useSelector(({loading: {user: isLoading}, user}) => ({isLoading, user}))
+    const dispatch = useDispatch()
+    useEffect(() => {
+        dispatch(loadUser())
+    }, [dispatch])
     return (
         <List>
-            <ListItem sx={{justifyContent: "center"}}>
-                <ImageListItem>
-                    <Avatar
-                        src="https://free.clipartof.com/160-Geisha-Avatar-Character-Free-Vector-Clipart-Illustration.jpg"
-                        variant={"square"}
-                        sx={{height: 100, width: 100}}
-                        alt="My Avatar"/>
-                </ImageListItem>
-            </ListItem>
-            <ListItem>
-                <ListItemText primary={"Name"} secondary={"Maruf"}/>
-                <ListItemText primary={"DOB"} secondary={"1998"}/>
-            </ListItem>
+            {isLoading ? <ListItem sx={{display: 'flex', justifyContent: "center"}}>
+                <CircularProgress/>
+            </ListItem> : (
+                <>
+                    <ImageListItem sx={{display: 'flex', justifyContent: "center"}}>
+                        <Avatar
+                            src="https://free.clipartof.com/160-Geisha-Avatar-Character-Free-Vector-Clipart-Illustration.jpg"
+                            variant={"square"}
+                            sx={{height: 100, width: 100}}
+                            alt="My Avatar"/>
+                    </ImageListItem>
+                    <ListItem>
+                        <ListItemText primary={"Name"} secondary={user.name}/>
+                        <ListItemText primary={"DOB"} secondary={user.birth_year}/>
+                    </ListItem>
+                </>
+            )}
         </List>
     );
 }
