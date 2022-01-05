@@ -1,6 +1,6 @@
 // @flow
 import {
-     Button,
+    Button,
     FormControl,
     InputLabel,
     MenuItem,
@@ -11,18 +11,29 @@ import {
 } from '@mui/material';
 import * as React from 'react';
 import {useState} from "react";
+import {useDispatch} from "react-redux";
+import {addItem} from "../store/effets";
+import {TodoItemStatus, TodoStatusOption} from "../store/types";
 
 type Props = {
     handleClose: () => void
 };
 
+const STATUS_OPTIONS: TodoStatusOption[] = [
+    {value: 'to-do', label: 'To do'},
+    {value: 'in-progress', label: 'In progress'},
+    {value: 'done', label: 'Done'},
+]
+
 export function NewTodoForm(props: Props) {
     const {handleClose} = props
-    const [status, setStatus] = useState('to-do')
+    const [status, setStatus] = useState<TodoItemStatus>('to-do')
     const [title, setTitle] = useState('')
     const [desc, setDesc] = useState('')
+    const dispatch = useDispatch()
     const handleSave = () => {
         // do state management
+        dispatch(addItem(title, desc, status))
         handleClose()
     }
     return (
@@ -42,12 +53,8 @@ export function NewTodoForm(props: Props) {
             <FormControl variant={"filled"}>
                 <InputLabel>Status</InputLabel>
                 <Select value={status}>
-                    {[
-                        {value: 'to-do', label: 'To do'},
-                        {value: 'in-progress', label: 'In progress'},
-                        {value: 'done', label: 'Done'},
-                    ].map(op => <MenuItem onClick={() => setStatus(op.value)} key={op.value}
-                                          value={op.value}>{op.label}</MenuItem>)}
+                    {STATUS_OPTIONS.map(op => <MenuItem onClick={() => setStatus(op.value)} key={op.value}
+                                                        value={op.value}>{op.label}</MenuItem>)}
                 </Select>
             </FormControl>
             <Button variant={"outlined"} color={"warning"} onClick={handleSave}>

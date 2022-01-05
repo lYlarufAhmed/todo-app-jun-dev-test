@@ -2,11 +2,12 @@ import {TodoItem} from "../store/types";
 import * as React from 'react';
 import {
     ListItem, ListItemIcon, Checkbox, ListItemText
-    , IconButton, ListItemButton
+    , IconButton, ListItemButton, ButtonGroup
 } from "@mui/material";
 import PendingIcon from '@mui/icons-material/Pending';
+import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import {useDispatch} from "react-redux";
-import {updateItem} from "../store/effets";
+import {deleteItem, updateItem} from "../store/effets";
 
 type Props = {
     item: TodoItem
@@ -21,14 +22,22 @@ export function TodoListItem(props: Props) {
     const handleTaskPendingToggle = () => {
         dispatch(updateItem(id, 'status', status === 'in-progress' ? 'to-do' : 'in-progress'))
     }
+    const handleTaskDelete = () => {
+        dispatch(deleteItem(id))
+    }
     return (
         <ListItem
             key={id}
             secondaryAction={
-                <IconButton onClick={handleTaskPendingToggle} edge="end" aria-label="comments">
+                <ButtonGroup>
+                    <IconButton onClick={handleTaskPendingToggle} edge="start" aria-label="pending">
 
-                    <PendingIcon color={status === "in-progress" ? 'success' : 'inherit'}/>
-                </IconButton>
+                        <PendingIcon color={status === "in-progress" ? 'success' : 'inherit'}/>
+                    </IconButton>
+                    <IconButton onClick={handleTaskDelete} edge={"end"} aria-label={"delete"}>
+                        <DeleteForeverIcon/>
+                    </IconButton>
+                </ButtonGroup>
             }
             disablePadding
             disabled={status === 'done'}

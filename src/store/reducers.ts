@@ -59,6 +59,14 @@ const reducer = (state = initialState, action: ApplicationAction) => {
                     [action.payload.field]: action.payload.value
                 } : task)
             })
+        case "deleteTask":
+            return produce(state, draft => {
+                draft.tasks = draft.tasks.filter(task => task.id !== action.payload.id)
+            })
+        case "addTask":
+            return produce(state, draft=>{
+                draft.tasks.push(action.payload.item)
+            })
         default:
             return initialState
     }

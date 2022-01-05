@@ -1,7 +1,7 @@
 import {TodoItem} from "../store/types";
 import * as React from 'react';
 import {TodoListItem} from "./TodoListItem";
-import {List} from "@mui/material";
+import {List, Typography} from "@mui/material";
 
 
 type Props = {
@@ -12,7 +12,8 @@ export function TodoList(props: Props) {
     const {items} = props
     return (
         <List>
-            {items.map(item => <TodoListItem item={item} key={item.id}/>)}
+            {items.length ? items.map(item => <TodoListItem item={item} key={item.id}/>) :
+                <Typography variant={"h3"}>No Items</Typography>}
         </List>
     );
 }

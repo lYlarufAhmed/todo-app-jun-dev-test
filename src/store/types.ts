@@ -1,10 +1,17 @@
 import {Action} from 'redux'
 
+export type TodoItemStatus = 'to-do' | 'in-progress' | 'done'
+
 export interface TodoItem {
     id: number;
     title: string;
     description: string;
-    status: 'to-do' | 'in-progress' | 'done';
+    status: TodoItemStatus;
+}
+
+export interface TodoStatusOption {
+    value: TodoItemStatus,
+    label: string
 }
 
 export interface User {
@@ -52,5 +59,10 @@ export interface AddTask extends Action {
     payload: { item: TodoItem }
 }
 
-export type ApplicationAction = AddTask | LoadUserRequest | LoadUserSuccess | LoadUserError | UpdateTask
+export interface DeleteTask extends Action {
+    type: 'deleteTask'
+    payload: { id: number }
+}
+
+export type ApplicationAction = DeleteTask | AddTask | LoadUserRequest | LoadUserSuccess | LoadUserError | UpdateTask
 

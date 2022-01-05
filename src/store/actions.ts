@@ -1,4 +1,13 @@
-import {User, TodoItem, LoadUserRequest, LoadUserSuccess, LoadUserError, UpdateTask, AddTask} from "./types";
+import {
+    User,
+    TodoItem,
+    LoadUserRequest,
+    LoadUserSuccess,
+    LoadUserError,
+    UpdateTask,
+    AddTask,
+    DeleteTask
+} from "./types";
 
 export const loadUserRequest = (): LoadUserRequest => ({
     type: 'loadUserRequest'
@@ -21,4 +30,8 @@ export const updateTask = (id: number, field: string, value: string): UpdateTask
 export const addTask = (item: TodoItem): AddTask => ({
     type: 'addTask',
     payload: {item}
+})
+export const deleteTask = (id: number): DeleteTask => ({
+    type: 'deleteTask',
+    payload: {id}
 })
